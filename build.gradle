@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.0.5-SNAPSHOT'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'maven-publish'
+}
+
+group = 'com.graduation'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url = 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+    compileOnly  'org.springframework.boot:spring-boot-starter-webmvc'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // 配置处理器（可选）
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
+    // JWT 相关依赖
+    compileOnly 'io.jsonwebtoken:jjwt-api:0.11.5'
+    compileOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    compileOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // Lombok（可选）
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = 'com.graduation'
+            artifactId = 'jwt-security-spring-boot-starter'
+            version = '1.0.15'
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
