@@ -12,6 +12,8 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+    withSourcesJar()
+    withJavadocJar()
 }
 
 repositories {
@@ -52,5 +54,16 @@ publishing {
     }
     repositories {
         mavenLocal()
+        def githubRepo = "CrownClownTest/jwt-security-spring-boot-starter"
+        if (githubRepo) {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/CrownClownTest/jwt-security-spring-boot-starter")
+                credentials {
+                    username = "CrownClownTest"
+                    password = "如果需要请自信给部署到你自己的github上 上面urlname等都要自己写"
+                }
+            }
+        }
     }
 }
